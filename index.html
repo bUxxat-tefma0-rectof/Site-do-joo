@@ -36,77 +36,62 @@
       animation: fadeOut 1s ease-in-out 5s forwards;
     }
 
-    .intro::before, .intro::after {
-      content: "";
-      position: absolute;
-      width: 200%;
-      height: 200%;
-      background: radial-gradient(circle, rgba(0, 153, 255, 0.3), transparent 70%);
-      animation: flash 1s infinite alternate;
-    }
-
-    .intro::after {
-      animation-delay: 0.5s;
-    }
-
-    .logo {
-      position: absolute;
-      top: 40px;
-      width: 160px;
-      animation: fadeInDown 1s ease forwards;
-    }
-
+    /* LOGO CENTRAL */
     .logo img {
+      width: 220px;
+      animation: logoPop 1.5s ease forwards;
+      filter: drop-shadow(0 0 25px #00aaff);
+    }
+
+    @keyframes logoPop {
+      0% { transform: scale(0.2); opacity: 0; }
+      100% { transform: scale(1); opacity: 1; }
+    }
+
+    /* Flash de tiro */
+    .flash {
+      position: absolute;
       width: 100%;
-      filter: drop-shadow(0 0 20px #007BFF);
-    }
-
-    .title {
-      font-size: 80px;
-      font-weight: 900;
-      letter-spacing: 5px;
-      color: #007BFF;
-      text-shadow: 0 0 30px #00aaff, 0 0 60px #007BFF;
+      height: 100%;
+      background: radial-gradient(circle, rgba(255,255,255,0.8) 0%, transparent 70%);
       opacity: 0;
-      animation: textReveal 2s ease forwards 1s;
+      pointer-events: none;
+      animation: flash 0.2s ease-in-out;
     }
 
-    .subtitle {
-      font-size: 28px;
-      opacity: 0;
-      margin-top: 15px;
-      animation: textReveal 2s ease forwards 2.5s;
+    @keyframes flash {
+      0% { opacity: 1; }
+      100% { opacity: 0; }
     }
 
-    /* PARTÍCULAS (efeito de tiro/luz) */
+    /* Faíscas / Partículas */
     .particle {
       position: absolute;
       width: 3px;
       height: 3px;
       background: #00aaff;
       border-radius: 50%;
-      animation: shoot 1s linear infinite;
+      animation: spark 1s linear infinite;
     }
 
-    @keyframes shoot {
+    @keyframes spark {
       from {
-        transform: translateY(0) translateX(0) scale(1);
+        transform: translate(0, 0) scale(1);
         opacity: 1;
       }
       to {
-        transform: translateY(-100vh) translateX(calc(-50vw + 100 * var(--rand-x))) scale(0);
+        transform: translate(calc(200px - 400 * var(--rand-x)), calc(-200px - 400 * var(--rand-y))) scale(0);
         opacity: 0;
       }
     }
 
-    @keyframes flash {
-      from { opacity: 0.1; }
-      to { opacity: 0.4; }
-    }
-
-    @keyframes fadeInDown {
-      from { transform: translateY(-50px); opacity: 0; }
-      to { transform: translateY(0); opacity: 1; }
+    /* Texto de boas-vindas */
+    .subtitle {
+      font-size: 28px;
+      margin-top: 30px;
+      opacity: 0;
+      animation: textReveal 2s ease forwards 1.5s;
+      text-shadow: 0 0 20px #007BFF;
     }
 
     @keyframes textReveal {
@@ -118,12 +103,11 @@
       to { opacity: 0; visibility: hidden; }
     }
 
-    /* CONTEÚDO PRINCIPAL */
+    /* Página principal */
     .main {
       display: none;
       height: 100vh;
       background: linear-gradient(180deg, #001F3F 0%, #000 100%);
-      color: #fff;
       text-align: center;
       padding-top: 20%;
     }
@@ -138,36 +122,55 @@
 <body>
 
   <!-- INTRO -->
-  <div class="intro">
+  <div class="intro" id="intro">
     <div class="logo">
-      <img src="logo-seven7.png" alt="Logo SEVEN7">
+      <img src="https://files.catbox.moe/tooknk.jpeg" alt="Logo SEVEN7">
     </div>
-    <div class="title">SEVEN7</div>
     <div class="subtitle">Seja bem-vindo à Guilda SEVEN7</div>
+    <!-- Som de tiro -->
+    <audio id="gunshot" src="https://cdn.pixabay.com/download/audio/2022/03/15/audio_d1a1b69a3b.mp3?filename=gunshot-7079.mp3" preload="auto"></audio>
   </div>
 
   <!-- CONTEÚDO PRINCIPAL -->
-  <div class="main">
+  <div class="main" id="main">
     <h1>Bem-vindo ao site da Guilda SEVEN7</h1>
   </div>
 
   <script>
-    // Cria partículas animadas (efeito de tiros/luzes)
-    const intro = document.querySelector('.intro');
-    for (let i = 0; i < 60; i++) {
+    const intro = document.getElementById('intro');
+    const gunshot = document.getElementById('gunshot');
+
+    // Cria faíscas animadas
+    for (let i = 0; i < 40; i++) {
       const particle = document.createElement('div');
       particle.classList.add('particle');
       particle.style.left = Math.random() * 100 + '%';
       particle.style.top = Math.random() * 100 + '%';
       particle.style.setProperty('--rand-x', Math.random());
+      particle.style.setProperty('--rand-y', Math.random());
       particle.style.animationDelay = (Math.random() * 1) + 's';
       intro.appendChild(particle);
     }
 
-    // Troca da intro para o site principal após 5s
+    // Função de tiro (flash + som)
+    const flashEffect = () => {
+      const flash = document.createElement('div');
+      flash.classList.add('flash');
+      intro.appendChild(flash);
+      gunshot.currentTime = 0;
+      gunshot.volume = 0.5; // volume moderado
+      gunshot.play();
+      setTimeout(() => flash.remove(), 200);
+    };
+
+    // Dispara tiros aleatórios
+    let shotInterval = setInterval(flashEffect, 800);
+
+    // Transição pro site principal após 5s
     setTimeout(() => {
-      document.querySelector('.intro').style.display = 'none';
-      document.querySelector('.main').style.display = 'block';
+      clearInterval(shotInterval);
+      intro.style.display = 'none';
+      document.getElementById('main').style.display = 'block';
     }, 5000);
   </script>
 </body>
