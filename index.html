@@ -1,162 +1,197 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="pt-BR">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Planos FLOWBOT</title>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <title>Planos de Automação</title>
   <style>
     body {
-      font-family: 'Poppins', sans-serif;
-      background: #f4f8ff;
-      color: #333;
+      font-family: Arial, sans-serif;
       margin: 0;
-      padding: 50px 20px;
+      padding: 20px;
+      background-color: #f4f4f4;
+      text-align: center;
     }
-
     h1 {
-      text-align: center;
-      font-size: 2.5rem;
-      color: #005ce6;
-      margin-bottom: 10px;
+      color: #333;
     }
-
-    p.subtitle {
-      text-align: center;
-      color: #555;
-      margin-bottom: 50px;
-    }
-
-    .pricing-container {
+    .pricing-table {
       display: flex;
-      flex-wrap: wrap;
       justify-content: center;
-      gap: 30px;
+      flex-wrap: wrap;
+      gap: 20px;
       max-width: 1200px;
       margin: 0 auto;
     }
-
     .plan {
-      background: #fff;
-      border: 2px solid #e1e8ff;
-      border-radius: 15px;
-      width: 270px;
-      padding: 30px;
-      text-align: center;
-      box-shadow: 0 5px 20px rgba(0, 92, 230, 0.1);
-      transition: all 0.3s ease;
-    }
-
-    .plan:hover {
-      transform: translateY(-10px);
-      box-shadow: 0 10px 25px rgba(0, 92, 230, 0.2);
-    }
-
-    .plan h2 {
-      color: #005ce6;
-      margin-bottom: 15px;
-      font-size: 1.5rem;
-    }
-
-    .price {
-      font-size: 1.8rem;
-      color: #003a99;
-      margin: 10px 0 20px;
-    }
-
-    .features {
-      text-align: left;
-      font-size: 0.9rem;
-      color: #555;
-      margin-bottom: 25px;
-      line-height: 1.6;
-    }
-
-    .plan button {
-      background: #005ce6;
-      color: #fff;
-      border: none;
+      background: white;
       border-radius: 8px;
-      padding: 12px 25px;
-      font-weight: 600;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+      width: 300px;
+      padding: 20px;
+      text-align: center;
+    }
+    .plan h2 {
+      color: #333;
+      margin: 0;
+    }
+    .plan .price {
+      font-size: 24px;
+      color: #2ecc71;
+      margin: 10px 0;
+    }
+    .plan ul {
+      list-style: none;
+      padding: 0;
+      margin: 20px 0;
+    }
+    .plan ul li {
+      margin: 10px 0;
+      color: #555;
+    }
+    .plan button {
+      background: #2ecc71;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 5px;
       cursor: pointer;
-      transition: background 0.3s ease;
+      font-size: 16px;
     }
-
     .plan button:hover {
-      background: #0041a8;
+      background: #27ae60;
     }
-
-    .highlight {
-      border: 2px solid #005ce6;
-      background: linear-gradient(180deg, #ffffff 0%, #e9f0ff 100%);
+    .payment-form {
+      display: none;
+      margin-top: 20px;
+    }
+    #card-element {
+      background: white;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      margin-bottom: 10px;
+    }
+    #payment-result {
+      margin-top: 10px;
+      color: #333;
+    }
+    @media (max-width: 768px) {
+      .plan {
+        width: 100%;
+      }
     }
   </style>
 </head>
 <body>
-
-  <h1>Planos FLOWBOT</h1>
-  <p class="subtitle">Automatize seu WhatsApp, Instagram e e-mail com o poder do FLOWBOT 💙</p>
-
-  <div class="pricing-container">
-    <!-- Free -->
+  <h1>Planos de Automação</h1>
+  <div class="pricing-table">
+    <!-- Plano Básico -->
     <div class="plan">
-      <h2>Free</h2>
-      <p class="price">R$ 0/mês</p>
-      <div class="features">
-        • 1 número WhatsApp<br>
-        • 500 mensagens/mês<br>
-        • CRM básico (Kanban limitado)<br>
-        • Envio rápido (texto, imagem, áudio)<br>
-        • Rastreamento básico (Correios)
+      <h2>Básico</h2>
+      <div class="price">R$0,20/mês</div>
+      <ul>
+        <li>1 dispositivo</li>
+        <li>Suporte básico</li>
+        <li>Automação simples</li>
+      </ul>
+      <button onclick="showPaymentForm('price_basico', 'Básico')">Assinar</button>
+      <div class="payment-form" id="payment-form-basico">
+        <div id="card-element-basico"></div>
+        <button onclick="processPayment('price_basico', 'Básico')">Pagar</button>
+        <div id="payment-result-basico"></div>
       </div>
-      <button>Começar Grátis</button>
     </div>
-
-    <!-- Pro -->
-    <div class="plan highlight">
-      <h2>Pro</h2>
-      <p class="price">R$ 97/mês</p>
-      <div class="features">
-        • Disparo em massa (Planilha, Etiquetas, Grupos)<br>
-        • Agendamento de mensagens<br>
-        • Perfil completo do cliente<br>
-        • CRM Kanban completo<br>
-        • Rastreamento multiplataforma<br>
-        • Integração com e-mail e Instagram
-      </div>
-      <button>Assinar Plano Pro</button>
-    </div>
-
-    <!-- Business -->
+    <!-- Plano Intermediário -->
     <div class="plan">
-      <h2>Business</h2>
-      <p class="price">R$ 297/mês</p>
-      <div class="features">
-        • 50 números WhatsApp<br>
-        • Envio ilimitado via planilha<br>
-        • Fluxos automáticos multi-canal<br>
-        • Dashboards e relatórios<br>
-        • API e Webhooks<br>
-        • Suporte via WhatsApp
+      <h2>Intermediário</h2>
+      <div class="price">R$50,00/mês</div>
+      <ul>
+        <li>5 dispositivos</li>
+        <li>Suporte prioritário</li>
+        <li>Automação avançada</li>
+      </ul>
+      <button onclick="showPaymentForm('price_intermediario', 'Intermediário')">Assinar</button>
+      <div class="payment-form" id="payment-form-intermediario">
+        <div id="card-element-intermediario"></div>
+        <button onclick="processPayment('price_intermediario', 'Intermediário')">Pagar</button>
+        <div id="payment-result-intermediario"></div>
       </div>
-      <button>Assinar Business</button>
     </div>
-
-    <!-- Enterprise -->
+    <!-- Plano Premium -->
     <div class="plan">
-      <h2>Enterprise</h2>
-      <p class="price">Sob consulta</p>
-      <div class="features">
-        • Instância dedicada<br>
-        • Marca branca (White Label)<br>
-        • Limites personalizados<br>
-        • SLA 99.9% uptime<br>
-        • Treinamento e suporte premium
+      <h2>Premium</h2>
+      <div class="price">R$100,00/mês</div>
+      <ul>
+        <li>Dispositivos ilimitados</li>
+        <li>Suporte 24/7</li>
+        <li>Automação completa</li>
+      </ul>
+      <button onclick="showPaymentForm('price_premium', 'Premium')">Assinar</button>
+      <div class="payment-form" id="payment-form-premium">
+        <div id="card-element-premium"></div>
+        <button onclick="processPayment('price_premium', 'Premium')">Pagar</button>
+        <div id="payment-result-premium"></div>
       </div>
-      <button>Falar com o time</button>
     </div>
   </div>
 
+  <script src="https://js.stripe.com/v3/"></script>
+  <script>
+    // Inicializa o Stripe
+    const stripe = Stripe('pk_live_51R3SVMP4GG93m2pTeUMjcmL7vyCLSNisXPYYyARzbJsW0DRsuqGYzrABssLm9MmW0EbHHRpwziqelf6rgTggMIsq00UXFFgHIr');
+    const elements = stripe.elements();
+
+    // Cria formulários Stripe Elements para cada plano
+    const cardElements = {
+      'basico': elements.create('card', { style: { base: { fontSize: '16px', color: '#32325d' } } }),
+      'intermediario': elements.create('card', { style: { base: { fontSize: '16px', color: '#32325d' } } }),
+      'premium': elements.create('card', { style: { base: { fontSize: '16px', color: '#32325d' } } })
+    };
+
+    // Monta os formulários nos elementos corretos
+    cardElements['basico'].mount('#card-element-basico');
+    cardElements['intermediario'].mount('#card-element-intermediario');
+    cardElements['premium'].mount('#card-element-premium');
+
+    // Mostra o formulário de pagamento para o plano selecionado
+    function showPaymentForm(priceId, planName) {
+      // Esconde todos os formulários
+      document.querySelectorAll('.payment-form').forEach(form => form.style.display = 'none');
+      // Mostra o formulário do plano selecionado
+      document.getElementById(`payment-form-${priceId.split('_')[1]}`).style.display = 'block';
+    }
+
+    // Processa o pagamento
+    async function processPayment(priceId, planName) {
+      const resultElement = document.getElementById(`payment-result-${priceId.split('_')[1]}`);
+      resultElement.textContent = 'Processando...';
+
+      try {
+        // Simula a criação de um PaymentIntent (você precisará de um backend para isso)
+        // Para simplificar, usamos um Price ID diretamente, mas o backend é necessário para segurança
+        const response = await fetch('/api/create-payment-intent', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ priceId })
+        });
+        const { clientSecret } = await response.json();
+
+        // Confirma o pagamento com o cartão
+        const result = await stripe.confirmCardPayment(clientSecret, {
+          payment_method: { card: cardElements[priceId.split('_')[1]] }
+        });
+
+        if (result.error) {
+          resultElement.textContent = result.error.message;
+        } else if (result.paymentIntent.status === 'succeeded') {
+          resultElement.textContent = `Plano ${planName} liberado!`;
+          // Aqui você pode adicionar lógica para liberar o produto (ex.: desbloquear uma seção)
+        }
+      } catch (error) {
+        resultElement.textContent = 'Erro ao processar o pagamento.';
+      }
+    }
+  </script>
 </body>
 </html>
