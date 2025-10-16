@@ -1,735 +1,162 @@
-<!doctype html>
-<html lang="pt-BR">
+<!DOCTYPE html>
+<html lang="pt-br">
 <head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>SEVEN7 — BR Prototype</title>
-<style>
-  :root{
-    --bg:#06121a;
-    --accent:#00aaff;
-    --danger:#ff4d4d;
-    --hud-bg: rgba(0,0,0,0.45);
-  }
-  html,body{height:100%;margin:0;background:linear-gradient(180deg,var(--bg),#000);font-family:Inter,Segoe UI,Arial;}
-  #ui {
-    position: absolute; left:12px; top:12px; z-index: 50; color: #ddd;
-  }
-  #logo { display:flex; gap:10px; align-items:center; margin-bottom:8px; }
-  #logo .badge{ width:48px; height:48px; background:linear-gradient(135deg,#003a6b,#00aaff); border-radius:8px; display:grid; place-items:center; box-shadow:0 6px 20px rgba(0,170,255,0.06);}
-  #logo .badge span{ font-weight:800; font-size:18px; color:#fff; letter-spacing:1px;}
-  #logo .title{font-weight:700;font-size:16px;}
-  #menu { background:var(--hud-bg); padding:10px; border-radius:8px; box-shadow:0 8px 30px rgba(0,0,0,0.5);}
-  #menu select, #menu button { font-size:14px; padding:6px 10px; border-radius:6px; border: none; background:#0b2a38; color:#fff; }
-  #status { position: absolute; right:12px; top:12px; z-index:50; display:flex; gap:8px; align-items:center; color:#fff; }
-  #hud { position:absolute; left:12px; bottom:12px; z-index:50; color:#fff; width:calc(100% - 24px);}
-  #hud .bar { background:rgba(255,255,255,0.06); height:14px; border-radius:10px; width:220px; overflow:hidden; margin-top:6px;}
-  #hud .lifefill { height:100%; background:linear-gradient(90deg,var(--accent),#2bd8ff); width:100%; transition:width 120ms linear;}
-  #hud .info { display:flex; gap:16px; align-items:center; margin-top:8px; }
-  canvas{ display:block; margin:0 auto; background:linear-gradient(180deg,#07111a,#010407); width:100%; height:100vh; }
-  #overlayMessage { position:absolute; left:50%; top:50%; transform:translate(-50%,-50%); color:#fff; font-size:20px; z-index:80; display:none; padding:18px 24px; background:rgba(0,0,0,0.55); border-radius:12px;}
-  small { color:#bcd; opacity:0.9;}
-  footer { position: absolute; right:12px; bottom:12px; color:#7aa; font-size:12px; z-index:50;}
-  /* mini radar */
-  .radar { width:120px; height:120px; border-radius:50%; background:radial-gradient(circle at 30% 30%, rgba(0,170,255,0.06), transparent 50%); border:1px solid rgba(255,255,255,0.04); position:relative; overflow:hidden;}
-  .radar .dot { position:absolute; width:6px; height:6px; border-radius:50%; background:#ff6b6b; transform:translate(-50%,-50%); }
-</style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Planos FLOWBOT</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: #f4f8ff;
+      color: #333;
+      margin: 0;
+      padding: 50px 20px;
+    }
+
+    h1 {
+      text-align: center;
+      font-size: 2.5rem;
+      color: #005ce6;
+      margin-bottom: 10px;
+    }
+
+    p.subtitle {
+      text-align: center;
+      color: #555;
+      margin-bottom: 50px;
+    }
+
+    .pricing-container {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 30px;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .plan {
+      background: #fff;
+      border: 2px solid #e1e8ff;
+      border-radius: 15px;
+      width: 270px;
+      padding: 30px;
+      text-align: center;
+      box-shadow: 0 5px 20px rgba(0, 92, 230, 0.1);
+      transition: all 0.3s ease;
+    }
+
+    .plan:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 10px 25px rgba(0, 92, 230, 0.2);
+    }
+
+    .plan h2 {
+      color: #005ce6;
+      margin-bottom: 15px;
+      font-size: 1.5rem;
+    }
+
+    .price {
+      font-size: 1.8rem;
+      color: #003a99;
+      margin: 10px 0 20px;
+    }
+
+    .features {
+      text-align: left;
+      font-size: 0.9rem;
+      color: #555;
+      margin-bottom: 25px;
+      line-height: 1.6;
+    }
+
+    .plan button {
+      background: #005ce6;
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      padding: 12px 25px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+
+    .plan button:hover {
+      background: #0041a8;
+    }
+
+    .highlight {
+      border: 2px solid #005ce6;
+      background: linear-gradient(180deg, #ffffff 0%, #e9f0ff 100%);
+    }
+  </style>
 </head>
 <body>
-  <div id="ui">
-    <div id="logo">
-      <div class="badge"><span>7</span></div>
-      <div>
-        <div class="title">SEVEN7 — BR Prototype</div>
-        <small>WASD mover · Mouse mirar · Clique atirar</small>
+
+  <h1>Planos FLOWBOT</h1>
+  <p class="subtitle">Automatize seu WhatsApp, Instagram e e-mail com o poder do FLOWBOT 💙</p>
+
+  <div class="pricing-container">
+    <!-- Free -->
+    <div class="plan">
+      <h2>Free</h2>
+      <p class="price">R$ 0/mês</p>
+      <div class="features">
+        • 1 número WhatsApp<br>
+        • 500 mensagens/mês<br>
+        • CRM básico (Kanban limitado)<br>
+        • Envio rápido (texto, imagem, áudio)<br>
+        • Rastreamento básico (Correios)
       </div>
+      <button>Começar Grátis</button>
     </div>
 
-    <div id="menu">
-      <label>Modo:
-        <select id="modeSelect">
-          <option value="solo">Solo</option>
-          <option value="duo">Duo (placeholder)</option>
-          <option value="squad">Squad (placeholder)</option>
-        </select>
-      </label>
-      <button id="startBtn">Iniciar partida</button>
-      <button id="restartBtn" style="margin-left:8px">Reiniciar</button>
-      <div style="margin-top:8px"><small>Mapa: Demo top-down · Mecânicas: safe-zone, loot, bots, armas</small></div>
+    <!-- Pro -->
+    <div class="plan highlight">
+      <h2>Pro</h2>
+      <p class="price">R$ 97/mês</p>
+      <div class="features">
+        • Disparo em massa (Planilha, Etiquetas, Grupos)<br>
+        • Agendamento de mensagens<br>
+        • Perfil completo do cliente<br>
+        • CRM Kanban completo<br>
+        • Rastreamento multiplataforma<br>
+        • Integração com e-mail e Instagram
+      </div>
+      <button>Assinar Plano Pro</button>
+    </div>
+
+    <!-- Business -->
+    <div class="plan">
+      <h2>Business</h2>
+      <p class="price">R$ 297/mês</p>
+      <div class="features">
+        • 3 números WhatsApp<br>
+        • Envio ilimitado via planilha<br>
+        • Fluxos automáticos multi-canal<br>
+        • Dashboards e relatórios<br>
+        • API e Webhooks<br>
+        • Suporte via WhatsApp
+      </div>
+      <button>Assinar Business</button>
+    </div>
+
+    <!-- Enterprise -->
+    <div class="plan">
+      <h2>Enterprise</h2>
+      <p class="price">Sob consulta</p>
+      <div class="features">
+        • Instância dedicada<br>
+        • Marca branca (White Label)<br>
+        • Limites personalizados<br>
+        • SLA 99.9% uptime<br>
+        • Treinamento e suporte premium
+      </div>
+      <button>Falar com o time</button>
     </div>
   </div>
 
-  <div id="status">
-    <div class="radar" id="radar"></div>
-  </div>
-
-  <div id="hud">
-    <div style="display:flex;gap:24px;align-items:center;">
-      <div>
-        <div style="font-weight:700">Vida</div>
-        <div class="bar"><div class="lifefill" id="lifeFill" style="width:100%"></div></div>
-      </div>
-      <div>
-        <div style="font-weight:700">Arma</div>
-        <div id="weaponName">Pistol</div>
-      </div>
-      <div>
-        <div style="font-weight:700">Loot</div>
-        <div id="lootInfo">-</div>
-      </div>
-    </div>
-  </div>
-
-  <canvas id="game"></canvas>
-  <div id="overlayMessage"></div>
-  <footer>Prototype — expandível • SEVEN7</footer>
-
-<script>
-/*
-  SEVEN7 Battle Royale Prototype
-  - Top-down 2D prototype implementing core mechanics:
-    * player movement + shooting
-    * basic weapon classes
-    * bots (simple AI)
-    * loot spawns
-    * safe-zone shrinking circle (damage outside)
-    * HUD, mini-radar, start/restart
-  - Single-file for easy testing. Extendable.
-*/
-
-// Canvas setup
-const canvas = document.getElementById('game');
-const ctx = canvas.getContext('2d');
-function resize(){
-  canvas.width = Math.min(window.innerWidth, 1200);
-  canvas.height = Math.min(window.innerHeight, 800);
-}
-window.addEventListener('resize', resize);
-resize();
-
-// Utility funcs
-const rand = (a,b)=> a + Math.random()*(b-a);
-const clamp = (v,a,b)=> Math.max(a, Math.min(b,v));
-const dist = (a,b)=> Math.hypot(a.x-b.x, a.y-b.y);
-
-// Game world
-const world = {
-  w: 1800,
-  h: 1200,
-  obstacles: [],
-  loot: []
-};
-
-// generate some obstacles (rects)
-for(let i=0;i<18;i++){
-  const w = rand(60,260), h = rand(40,200);
-  world.obstacles.push({
-    x: rand(80, world.w - w - 80),
-    y: rand(80, world.h - h - 80),
-    w, h
-  });
-}
-
-// player
-const player = {
-  x: world.w/2, y: world.h/2,
-  vx:0, vy:0, speed: 220,
-  angle:0,
-  hp:100, maxHp:100,
-  weapon: null,
-  radius: 14,
-  alive: true,
-  team: 1
-};
-
-// basic weapons
-const WEAPONS = {
-  Pistol: { name:'Pistol', dmg:12, rpm:300, bulletSpeed:800, mag:12, reload:1200 },
-  SMG: { name:'SMG', dmg:8, rpm:700, bulletSpeed:900, mag:30, reload:1400 },
-  Rifle: { name:'Rifle', dmg:22, rpm:250, bulletSpeed:1200, mag:20, reload:1600 },
-  Sniper: { name:'Sniper', dmg:72, rpm:60, bulletSpeed:2000, mag:5, reload:2200 }
-};
-
-// default weapon
-player.weapon = Object.assign({}, WEAPONS.Pistol, {ammo: WEAPONS.Pistol.mag, lastShot: 0});
-
-// bullets
-const bullets = [];
-
-// bots
-const bots = [];
-function spawnBot(x,y,team=2){
-  bots.push({
-    id: 'bot'+Math.random().toString(36).slice(2,8),
-    x,y,
-    vx:0, vy:0, angle:0,
-    hp: 80,
-    maxHp: 80,
-    radius:12,
-    weapon: Object.assign({}, (Math.random()<0.4?WEAPONS.SMG: Math.random()<0.6?WEAPONS.Rifle:WEAPONS.Pistol), {ammo:999, lastShot:0}),
-    alive:true,
-    team
-  });
-}
-// spawn initial bots
-for(let i=0;i<8;i++) spawnBot(rand(200, world.w-200), rand(200, world.h-200));
-
-// loot spawn (weapons, kit, armor)
-function spawnLoot(x,y,type){
-  world.loot.push({x,y,type, id: 'loot'+Math.random().toString(36).slice(2,6)});
-}
-for(let i=0;i<20;i++){
-  spawnLoot(rand(120, world.w-120), rand(120, world.h-120), ['weapon','armor','kit'][Math.floor(Math.random()*3)]);
-}
-
-// safe-zone (circle)
-const zone = {
-  cx: world.w/2, cy: world.h/2, r: Math.min(world.w, world.h)/2 - 60,
-  targetCx: world.w/2, targetCy: world.h/2, targetR: Math.min(world.w, world.h)/2 - 60,
-  phase: 0,
-  shrinkTimer: 0,
-  shrinkInterval: 12000, // time between shrinks
-  shrinkSteps: 5,
-  active:true
-};
-
-// camera (follow player)
-const cam = { x:0, y:0, w: canvas.width, h:canvas.height };
-
-// input
-const keys = {};
-let mouse = {x:0,y:0,down:false};
-window.addEventListener('keydown', e=> keys[e.key.toLowerCase()] = true);
-window.addEventListener('keyup', e=> keys[e.key.toLowerCase()] = false);
-canvas.addEventListener('mousemove', e=>{
-  const rect = canvas.getBoundingClientRect();
-  mouse.x = e.clientX - rect.left;
-  mouse.y = e.clientY - rect.top;
-});
-canvas.addEventListener('mousedown', e=> mouse.down = true);
-canvas.addEventListener('mouseup', e=> mouse.down = false);
-
-// HUD elements
-const lifeFill = document.getElementById('lifeFill');
-const weaponName = document.getElementById('weaponName');
-const lootInfo = document.getElementById('lootInfo');
-const overlay = document.getElementById('overlayMessage');
-const startBtn = document.getElementById('startBtn');
-const restartBtn = document.getElementById('restartBtn');
-const modeSelect = document.getElementById('modeSelect');
-
-startBtn.onclick = ()=> startMatch();
-restartBtn.onclick = ()=> resetGame();
-
-// game state
-let running = false;
-let lastTime = performance.now();
-let elapsedTotal = 0;
-
-// basic start/reset
-function startMatch(){
-  running = true;
-  overlay.style.display = 'none';
-  // place player near center, respawn bots, loot etc.
-  player.x = rand(300, world.w-300); player.y = rand(300, world.h-300); player.hp = player.maxHp; player.alive = true;
-  // reset zone
-  zone.cx = world.w/2; zone.cy = world.h/2; zone.r = Math.min(world.w, world.h)/2 - 60;
-  zone.shrinkTimer = 0; zone.phase = 0; zone.active = true;
-  // clear bullets, spawn bots fresh
-  bullets.length = 0; bots.length = 0;
-  for(let i=0;i<10;i++) spawnBot(rand(80,world.w-80), rand(80, world.h-80));
-  // respawn loot
-  world.loot.length = 0;
-  for(let i=0;i<30;i++) spawnLoot(rand(120, world.w-120), rand(120, world.h-120), ['weapon','armor','kit'][Math.floor(Math.random()*3)]);
-}
-
-function resetGame(){
-  running = false;
-  overlay.style.display = 'block';
-  overlay.innerText = 'Partida reiniciada — clique em Iniciar partida';
-  // reset world minimally
-  bullets.length = 0;
-  bots.length = 0;
-}
-
-// simple collision rect-circle
-function rectCircleOverlap(rx,ry,rw,rh, cx,cy, cr){
-  const nearestX = Math.max(rx, Math.min(cx, rx+rw));
-  const nearestY = Math.max(ry, Math.min(cy, ry+rh));
-  const dx = cx - nearestX;
-  const dy = cy - nearestY;
-  return (dx*dx + dy*dy) < (cr*cr);
-}
-
-// world to screen
-function worldToScreen(px,py){
-  return { x: px - cam.x, y: py - cam.y };
-}
-
-function screenToWorld(sx,sy){
-  return { x: sx + cam.x, y: sy + cam.y };
-}
-
-// update loop
-function update(dt){
-  if(!running) return;
-
-  elapsedTotal += dt;
-  // camera follow player
-  cam.w = canvas.width; cam.h = canvas.height;
-  cam.x = clamp(player.x - cam.w/2, 0, world.w - cam.w);
-  cam.y = clamp(player.y - cam.h/2, 0, world.h - cam.h);
-
-  // input -> movement
-  let moveX = 0, moveY = 0;
-  if(keys['w'] || keys['arrowup']) moveY -= 1;
-  if(keys['s'] || keys['arrowdown']) moveY += 1;
-  if(keys['a'] || keys['arrowleft']) moveX -= 1;
-  if(keys['d'] || keys['arrowright']) moveX += 1;
-  const len = Math.hypot(moveX, moveY) || 1;
-  player.vx = (moveX/len) * player.speed;
-  player.vy = (moveY/len) * player.speed;
-
-  player.x += player.vx * dt;
-  player.y += player.vy * dt;
-
-  // clamp in world
-  player.x = clamp(player.x, 20, world.w-20);
-  player.y = clamp(player.y, 20, world.h-20);
-
-  // update aim angle based on mouse
-  const worldMouse = screenToWorld(mouse.x, mouse.y);
-  player.angle = Math.atan2(worldMouse.y - player.y, worldMouse.x - player.x);
-
-  // shooting (auto for some weapons)
-  if(mouse.down && player.alive){
-    attemptShoot(player, player.weapon);
-  }
-
-  // update bullets
-  for(let i=bullets.length-1;i>=0;i--){
-    const b = bullets[i];
-    b.x += b.vx * dt;
-    b.y += b.vy * dt;
-    b.life -= dt*1000;
-    // world bounds
-    if(b.x < 0 || b.y < 0 || b.x > world.w || b.y > world.h || b.life <= 0){
-      bullets.splice(i,1); continue;
-    }
-    // collision with bots
-    if(b.owner !== 'player'){
-      // bullets from bots shouldn't hit bots on same team; skip for brevity
-    }
-    // check bots
-    for(let j=0;j<bots.length;j++){
-      const bot = bots[j];
-      if(!bot.alive) continue;
-      const d = Math.hypot(bot.x - b.x, bot.y - b.y);
-      if(d < bot.radius + 4){
-        // hit
-        bot.hp -= b.dmg;
-        bullets.splice(i,1);
-        if(bot.hp <= 0){
-          bot.alive = false;
-          // spawn small loot
-          spawnLoot(bot.x + rand(-30,30), bot.y + rand(-30,30), 'kit');
-        }
-        break;
-      }
-    }
-    // player hit
-    if(b.owner !== 'player' && player.alive){
-      const d = Math.hypot(player.x - b.x, player.y - b.y);
-      if(d < player.radius + 4){
-        player.hp -= b.dmg;
-        bullets.splice(i,1);
-        if(player.hp <= 0){
-          player.alive = false;
-          overlay.style.display = 'block';
-          overlay.innerText = 'Você morreu — pressione Reiniciar';
-          running = false;
-        }
-      }
-    }
-  }
-
-  // bots AI
-  bots.forEach(bot=>{
-    if(!bot.alive) return;
-    // simple: if close to player, aim and shoot; otherwise wander
-    const d = Math.hypot(player.x - bot.x, player.y - bot.y);
-    if(d < 320){
-      // move toward player with small randomness
-      const angleToPlayer = Math.atan2(player.y - bot.y, player.x - bot.x);
-      bot.vx = Math.cos(angleToPlayer) * 80;
-      bot.vy = Math.sin(angleToPlayer) * 80;
-      // aim
-      bot.angle = angleToPlayer;
-      if(bulletCanFire(bot, bot.weapon)) botShoot(bot);
-    } else {
-      // wander: small random direction changes
-      if(Math.random() < 0.02) {
-        bot.vx = rand(-60,60);
-        bot.vy = rand(-60,60);
-      }
-      bot.angle += (Math.random()-0.5)*0.03;
-    }
-    // move and collide with obstacles (very simple)
-    bot.x += bot.vx * dt;
-    bot.y += bot.vy * dt;
-    bot.x = clamp(bot.x, 20, world.w-20);
-    bot.y = clamp(bot.y, 20, world.h-20);
-  });
-
-  // player collision with obstacles (simple push-out)
-  world.obstacles.forEach(o=>{
-    if(rectCircleOverlap(o.x,o.y,o.w,o.h, player.x, player.y, player.radius)){
-      // push back to previous position
-      player.x -= player.vx * dt * 1.2;
-      player.y -= player.vy * dt * 1.2;
-    }
-  });
-
-  // bot collisions with obstacles (basic)
-  bots.forEach(bot=>{
-    world.obstacles.forEach(o=>{
-      if(rectCircleOverlap(o.x,o.y,o.w,o.h, bot.x, bot.y, bot.radius)){
-        bot.x -= bot.vx * dt * 1.2;
-        bot.y -= bot.vy * dt * 1.2;
-        bot.vx *= -0.6; bot.vy *= -0.6;
-      }
-    });
-  });
-
-  // pick up loot
-  for(let i=world.loot.length-1;i>=0;i--){
-    const L = world.loot[i];
-    if(Math.hypot(player.x - L.x, player.y - L.y) < 26){
-      // pick up
-      if(L.type === 'weapon'){
-        // give random weapon
-        const w = (Math.random()<0.3?WEAPONS.SMG: Math.random()<0.6?WEAPONS.Rifle:WEAPONS.Pistol);
-        player.weapon = Object.assign({}, w, {ammo: w.mag, lastShot:0});
-        weaponName.innerText = player.weapon.name;
-        lootInfo.innerText = 'Pegou arma: ' + player.weapon.name;
-      } else if(L.type === 'kit'){
-        player.hp = Math.min(player.maxHp, player.hp + 40);
-        lootInfo.innerText = 'Usou kit (+40 HP)';
-      } else if(L.type === 'armor'){
-        // for prototype: armor gives small hp
-        player.maxHp = 120;
-        player.hp = Math.min(player.maxHp, player.hp + 20);
-        lootInfo.innerText = 'Peito reforçado (+20 HP)';
-      }
-      world.loot.splice(i,1);
-    }
-  }
-
-  // safe-zone shrinking logic
-  zone.shrinkTimer += dt*1000;
-  // after certain interval, pick new target circle and start shrinking
-  if(zone.shrinkTimer > zone.shrinkInterval && zone.phase < zone.shrinkSteps){
-    zone.phase++;
-    // pick new center near current center with some randomness
-    zone.targetCx = clamp(zone.cx + rand(-200,200), 200, world.w-200);
-    zone.targetCy = clamp(zone.cy + rand(-150,150), 200, world.h-200);
-    zone.targetR = Math.max(80, zone.r * 0.7); // shrink radius
-    zone.shrinkTimer = 0;
-    // schedule smooth shrink for next 8 seconds
-    const duration = 6000;
-    const startR = zone.r, startCx = zone.cx, startCy = zone.cy;
-    const start = performance.now();
-    const tick = (t)=>{
-      const p = clamp((t-start)/duration, 0,1);
-      // ease
-      const ease = p<0.5? 2*p*p : -1 + (4-2*p)*p;
-      zone.r = startR + (zone.targetR - startR) * ease;
-      zone.cx = startCx + (zone.targetCx - startCx) * ease;
-      zone.cy = startCy + (zone.targetCy - startCy) * ease;
-      if(p < 1) requestAnimationFrame(tick);
-    };
-    requestAnimationFrame(tick);
-  }
-
-  // damage player if outside zone
-  const dcenter = Math.hypot(player.x - zone.cx, player.y - zone.cy);
-  if(dcenter > zone.r + 40){
-    // take damage over time
-    player.hp -= 12 * dt; // DPS outside
-    if(player.hp <= 0){
-      player.alive = false; running = false;
-      overlay.style.display = 'block';
-      overlay.innerText = 'Você morreu na zona — reinicie';
-    }
-  }
-
-  // update HUD
-  lifeFill.style.width = (player.hp / player.maxHp * 100) + '%';
-  weaponName.innerText = player.weapon ? player.weapon.name : 'Nenhuma';
-}
-
-// shooting checks
-function attemptShoot(entity, weapon){
-  const now = performance.now();
-  if(!weapon) return;
-  const delay = 60000 / weapon.rpm; // ms between shots
-  if(now - weapon.lastShot >= delay && weapon.ammo > 0){
-    // fire
-    weapon.lastShot = now;
-    weapon.ammo--;
-    // spawn bullet
-    const angle = entity.angle;
-    const vx = Math.cos(angle) * weapon.bulletSpeed;
-    const vy = Math.sin(angle) * weapon.bulletSpeed;
-    const startX = entity.x + Math.cos(angle) * (entity.radius + 6);
-    const startY = entity.y + Math.sin(angle) * (entity.radius + 6);
-    bullets.push({
-      x: startX, y: startY, vx, vy, life: 2000, dmg: weapon.dmg, owner: entity === player ? 'player' : 'bot'
-    });
-  } else if(weapon.ammo <= 0){
-    // auto reload simple
-    // for prototype we reload instantly after 700ms
-    if(!weapon.reloading){
-      weapon.reloading = true;
-      setTimeout(()=>{
-        weapon.ammo = weapon.mag;
-        weapon.reloading = false;
-      }, weapon.reload);
-    }
-  }
-}
-function bulletCanFire(entity, weapon){
-  const now = performance.now();
-  const delay = 60000 / weapon.rpm;
-  return now - weapon.lastShot >= delay;
-}
-function botShoot(bot){
-  const now = performance.now();
-  if(now - (bot.weapon.lastShot || 0) < (60000/bot.weapon.rpm)) return;
-  bot.weapon.lastShot = now;
-  // small inaccuracy
-  const inacc = (Math.random()-0.5)*0.24;
-  const angle = bot.angle + inacc;
-  const vx = Math.cos(angle) * bot.weapon.bulletSpeed;
-  const vy = Math.sin(angle) * bot.weapon.bulletSpeed;
-  bullets.push({ x: bot.x + Math.cos(angle)*(bot.radius+6), y: bot.y + Math.sin(angle)*(bot.radius+6),
-    vx, vy, life: 2000, dmg: bot.weapon.dmg, owner:'bot' });
-}
-
-// drawing
-function draw(){
-  // clear
-  ctx.clearRect(0,0,canvas.width,canvas.height);
-  // world background (repeat-ish)
-  const sx = Math.floor(cam.x/80)*80 - cam.x;
-  const sy = Math.floor(cam.y/80)*80 - cam.y;
-  ctx.fillStyle = '#03161f';
-  ctx.fillRect(0,0,canvas.width,canvas.height);
-
-  // subtle grid/tiles
-  ctx.save();
-  ctx.translate(sx, sy);
-  ctx.globalAlpha = 0.06;
-  ctx.fillStyle = '#3aa6e6';
-  for(let x=0;x<canvas.width+160;x+=80){
-    for(let y=0;y<canvas.height+160;y+=80){
-      ctx.fillRect(x,y,1,1);
-    }
-  }
-  ctx.restore();
-
-  // draw safe-zone (world space -> screen)
-  const zScreen = worldToScreen(zone.cx, zone.cy);
-  const scale = canvas.width / cam.w;
-  // radius in screen coordinates
-  const zr = zone.r - cam.x*0 + 0; // we need to convert world radius to screen scale
-  const rScreen = zone.r - 0; // compute more directly:
-  const rS = zone.r; // world radius
-  const rScreenPx = rS * (canvas.width / cam.w);
-
-  ctx.save();
-  // dim outside zone
-  ctx.beginPath();
-  ctx.rect(0,0,canvas.width,canvas.height);
-  ctx.arc(worldToScreen(zone.cx, zone.cy).x, worldToScreen(zone.cx, zone.cy).y, rScreenPx, 0, Math.PI*2, true);
-  ctx.fillStyle = 'rgba(0,6,10,0.6)';
-  ctx.fill('evenodd');
-  // inner circle stroke
-  ctx.beginPath();
-  ctx.arc(worldToScreen(zone.cx, zone.cy).x, worldToScreen(zone.cx, zone.cy).y, rScreenPx, 0, Math.PI*2);
-  ctx.strokeStyle = 'rgba(0,170,255,0.16)';
-  ctx.lineWidth = 4;
-  ctx.stroke();
-  ctx.restore();
-
-  // draw obstacles
-  ctx.fillStyle = '#0f2530';
-  ctx.strokeStyle = '#07222b';
-  world.obstacles.forEach(o=>{
-    const s = worldToScreen(o.x,o.y);
-    ctx.fillRect(s.x, s.y, o.w * (canvas.width / cam.w), o.h * (canvas.height / cam.h));
-    ctx.strokeRect(s.x, s.y, o.w * (canvas.width / cam.w), o.h * (canvas.height / cam.h));
-  });
-
-  // draw loot
-  world.loot.forEach(L=>{
-    const s = worldToScreen(L.x,L.y);
-    ctx.save();
-    ctx.translate(s.x, s.y);
-    ctx.beginPath();
-    if(L.type === 'weapon'){ ctx.fillStyle = '#2bd8ff'; ctx.fillRect(-8,-6,16,12); }
-    else if(L.type === 'kit'){ ctx.fillStyle = '#9bff9b'; ctx.beginPath(); ctx.arc(0,0,8,0,Math.PI*2); ctx.fill(); }
-    else if(L.type === 'armor'){ ctx.fillStyle = '#ffd96b'; ctx.beginPath(); ctx.rect(-8,-6,16,12); ctx.fill(); }
-    ctx.restore();
-  });
-
-  // draw bullets
-  ctx.fillStyle = '#fff';
-  bullets.forEach(b=>{
-    const s = worldToScreen(b.x,b.y);
-    ctx.beginPath();
-    ctx.fillStyle = '#ffd';
-    ctx.arc(s.x, s.y, 3,0,Math.PI*2);
-    ctx.fill();
-  });
-
-  // draw bots
-  bots.forEach(bot=>{
-    if(!bot.alive) return;
-    const s = worldToScreen(bot.x, bot.y);
-    ctx.save();
-    ctx.translate(s.x, s.y);
-    // body
-    ctx.beginPath();
-    ctx.fillStyle = '#ff5a5a';
-    ctx.arc(0,0, bot.radius, 0, Math.PI*2);
-    ctx.fill();
-    // direction
-    ctx.strokeStyle = '#fff';
-    ctx.beginPath();
-    ctx.moveTo(0,0);
-    ctx.lineTo(Math.cos(bot.angle)*20, Math.sin(bot.angle)*20);
-    ctx.stroke();
-    // hp
-    ctx.fillStyle = '#222';
-    ctx.fillRect(-20, -bot.radius-10, 40,6);
-    ctx.fillStyle = '#7fff7f';
-    ctx.fillRect(-20, -bot.radius-10, (bot.hp/bot.maxHp)*40,6);
-    ctx.restore();
-  });
-
-  // draw player
-  if(player.alive){
-    const p = worldToScreen(player.x, player.y);
-    ctx.save();
-    ctx.translate(p.x, p.y);
-    // shadow
-    ctx.beginPath();
-    ctx.fillStyle = 'rgba(0,0,0,0.45)';
-    ctx.ellipse(0, player.radius+8, player.radius+8, player.radius+4, 0, 0, Math.PI*2);
-    ctx.fill();
-    // body
-    ctx.beginPath();
-    ctx.fillStyle = '#00aaff';
-    ctx.arc(0,0, player.radius, 0, Math.PI*2);
-    ctx.fill();
-    // aim line
-    ctx.strokeStyle = '#fff';
-    ctx.lineWidth = 2;
-    ctx.beginPath();
-    ctx.moveTo(0,0);
-    ctx.lineTo(Math.cos(player.angle)*28, Math.sin(player.angle)*28);
-    ctx.stroke();
-    // hp bar
-    ctx.restore();
-  }
-
-  // mini radar (draw into small element)
-  drawRadar();
-
-  // debug small world coords display (optional)
-  // draw overlay crosshair
-  ctx.save();
-  ctx.strokeStyle = 'rgba(255,255,255,0.08)';
-  ctx.beginPath();
-  ctx.moveTo(canvas.width/2 - 12, canvas.height/2);
-  ctx.lineTo(canvas.width/2 + 12, canvas.height/2);
-  ctx.moveTo(canvas.width/2, canvas.height/2 - 12);
-  ctx.lineTo(canvas.width/2, canvas.height/2 + 12);
-  ctx.stroke();
-  ctx.restore();
-}
-
-function drawRadar(){
-  const radar = document.getElementById('radar');
-  // clear
-  radar.innerHTML = '';
-  // center dot (player)
-  const p = document.createElement('div'); p.className = 'dot';
-  p.style.left = '50%'; p.style.top = '50%'; p.style.background = '#00e5ff';
-  radar.appendChild(p);
-  // bots on radar
-  bots.forEach(bot=>{
-    if(!bot.alive) return;
-    const dx = bot.x - player.x;
-    const dy = bot.y - player.y;
-    const maxR = 400; // radar radius in world units
-    if(Math.abs(dx) > maxR || Math.abs(dy) > maxR) return;
-    const rx = (dx / maxR) * 50 + 50;
-    const ry = (dy / maxR) * 50 + 50;
-    const d = Math.hypot(dx,dy);
-    const dot = document.createElement('div');
-    dot.className = 'dot';
-    dot.style.left = rx + '%';
-    dot.style.top = ry + '%';
-    dot.style.background = d < 140 ? '#ff6b6b' : '#ffd56b';
-    dot.style.width = '6px'; dot.style.height = '6px';
-    radar.appendChild(dot);
-  });
-}
-
-// game loop
-function frame(now){
-  const dt = Math.min(40, now - lastTime) / 1000; // cap dt
-  lastTime = now;
-  update(dt);
-  draw();
-  requestAnimationFrame(frame);
-}
-requestAnimationFrame(frame);
-
-// mouse click shoot handling (for semi-auto weapons)
-canvas.addEventListener('click', (e)=>{
-  if(!running) return;
-  // single click should trigger one shot (others may auto-fire)
-  attemptShoot(player, player.weapon);
-});
-
-// initial overlay
-overlay.style.display = 'block';
-overlay.innerText = 'Clique em Iniciar partida';
-
-// keyboard quick actions
-window.addEventListener('keydown', (e)=>{
-  if(e.key === 'r'){ // reload shorthand
-    if(player.weapon && !player.weapon.reloading){
-      player.weapon.reloading = true;
-      setTimeout(()=> { player.weapon.ammo = player.weapon.mag; player.weapon.reloading=false; }, player.weapon.reload);
-    }
-  }
-});
-
-// expose reset for consoles
-window.SE7 = { startMatch, resetGame, world, player };
-
-// accessibility: allow selecting mode (currently placeholder)
-modeSelect.addEventListener('change', ()=>{
-  // we display selection but only 'solo' is functionally implemented in prototype
-  const val = modeSelect.value;
-  overlay.style.display = 'block';
-  overlay.innerText = val === 'solo' ? 'Modo Solo selecionado. Clique Iniciar.' : 'Modo selecionado — (Duo/Squad: placeholders in prototype). Clique Iniciar.';
-});
-
-</script>
 </body>
 </html>
