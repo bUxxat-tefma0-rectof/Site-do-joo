@@ -30,3 +30,29 @@ def send_verification_code_email(to_email: str, code: str):
     </div>
     """
     send_email(to_email, subject, html)
+
+
+def send_password_reset_email(to_email: str, reset_link: str):
+    subject = "Recuperação de senha"
+    html = f"""
+    <div style="font-family: Arial, sans-serif;">
+        <h2>Redefinir sua senha</h2>
+        <p>Clique no link abaixo para criar uma nova senha:</p>
+        <a href="{reset_link}" style="display:inline-block;padding:10px 20px;background:#111;color:#fff;text-decoration:none;border-radius:6px;">
+            Redefinir senha
+        </a>
+        <p>Este link expira em 30 minutos. Se você não solicitou isso, ignore este e-mail.</p>
+    </div>
+    """
+    send_email(to_email, subject, html)
+
+
+def send_password_changed_email(to_email: str):
+    subject = "Sua senha foi alterada"
+    html = """
+    <div style="font-family: Arial, sans-serif;">
+        <h2>Senha alterada com sucesso</h2>
+        <p>Sua senha foi alterada. Se não foi você, entre em contato com o suporte imediatamente.</p>
+    </div>
+    """
+    send_email(to_email, subject, html)
