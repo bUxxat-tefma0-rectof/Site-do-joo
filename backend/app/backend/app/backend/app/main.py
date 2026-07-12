@@ -17,6 +17,6 @@ def read_root():
     return {"status": "API funcionando"}
 
 
-# Os routers serão incluídos aqui nas próximas partes
-# from app.routers import auth, users, products
-# app.include_router(auth.router, prefix="/auth", tags=["Autenticação"])
+from app.routers import auth
+
+app.include_router(auth.router, prefix="/auth", tags=["Autenticação"])
